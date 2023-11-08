@@ -1,10 +1,14 @@
 #include <stdlib.h>
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define SIZE_CHECK
 typedef size_t index_t;
 typedef size_t typeSize_t;
 
 typedef struct vec_t {
-    void* data = NULL;
+    void* data;
     index_t size;
     index_t capacity;
 #ifdef SIZE_CHECK
@@ -204,3 +208,7 @@ void* vec_back(vec_t* v, typeSize_t elemSize);
 */
 #define vec_back_t(v, type) \
     ((type*)vec_back(v, sizeof(type)))
+
+#ifdef __cplusplus
+}
+#endif

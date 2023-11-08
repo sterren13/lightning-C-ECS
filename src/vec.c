@@ -30,7 +30,7 @@ void vec_append(vec_t* v, void* data, typeSize_t elemSize) {
     if (v->size == v->capacity) {
         vec_resize(v, v->capacity * 2, elemSize);
     }
-    memcpy(v->data + v->size * elemSize, data, elemSize);
+    ecs_memcopy(v->data + v->size * elemSize, data, elemSize);
     v->size++;
 }
 
