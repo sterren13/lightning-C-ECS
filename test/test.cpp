@@ -2,19 +2,19 @@
 
 #include "vec.h"
 
-/*
-* test vec_init
-* ec_size
-* vec_capacity
-* vec_resize_t
-* vec_append_t
-* vec_remove_t
-* vec_clear
-* vec_get_t
-* vec_set_t
-* vec_front_t
-* vec_back_t
-* vec_remove_back_t
+/* function to test:
+*           - test vec_init
+*           - vec_size
+*           - vec_capacity
+*           - vec_resize_t
+*           - vec_append_t
+*           - vec_remove_t
+*           - vec_clear
+*           - vec_get_t
+*           - vec_set_t
+*           - vec_front_t
+*           - vec_back_t
+*           - vec_remove_back_t
 */
 
 class VectorTest : public ::testing::Test {
