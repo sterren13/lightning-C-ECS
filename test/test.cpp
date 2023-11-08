@@ -92,6 +92,7 @@ TEST_F(VectorTest, GetTest) {
     int value = 5;
     vec_append_t(&v, &value, int);
     EXPECT_EQ(*vec_get_t(&v, 0, int), value) << "Retrieved value is not correct";
+    EXPECT_EQ(vec_get_t(&v, 1, int), nullptr) << "Retrieved value is not null";
 }
 
 TEST_F(VectorTest, SetTest) {
@@ -103,12 +104,14 @@ TEST_F(VectorTest, SetTest) {
 }
 
 TEST_F(VectorTest, FrontBackTest) {
+    EXPECT_EQ(vec_front_t(&v, int), nullptr) << "Front value is not null when size is 0";
+    EXPECT_EQ(vec_back_t(&v, int), nullptr) << "Back value is not null when size is 0";
     int value1 = 5;
     int value2 = 10;
     vec_append_t(&v, &value1, int);
     vec_append_t(&v, &value2, int);
-    EXPECT_EQ(*vec_front_t(&v, int), value1);
-    EXPECT_EQ(*vec_back_t(&v, int), value2);
+    EXPECT_EQ(*vec_front_t(&v, int), value1) << "Front value is not correct";
+    EXPECT_EQ(*vec_back_t(&v, int), value2) << "Back value is not correct";
 }
 
 TEST_F(VectorTest, RemoveBackTest) {
@@ -117,8 +120,12 @@ TEST_F(VectorTest, RemoveBackTest) {
     vec_append_t(&v, &value1, int);
     vec_append_t(&v, &value2, int);
     int* removedValue = vec_remove_back_t(&v, int);
-    EXPECT_EQ(*removedValue, value2);
-    EXPECT_EQ(v.size, 1);
+    EXPECT_EQ(*removedValue, value2) << "Removed value2 is not correct";
+    int* removedValue2 = vec_remove_back_t(&v, int);
+    EXPECT_EQ(*removedValue2, value1) << "Removed value1 is not correct";
+    EXPECT_EQ(v.size, 0) << "Size is not 0 after remove back";
+    int* removedValue3 = vec_remove_back_t(&v, int);
+    EXPECT_EQ(removedValue3, nullptr) << "Removed value3 is not null";
 }
 
 TEST_F(VectorTest, RemoveBackLimitTest){

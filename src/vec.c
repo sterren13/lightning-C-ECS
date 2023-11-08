@@ -74,6 +74,8 @@ typeSize_t vec_capacity(vec_t* v) {
 }
 
 void* vec_front(vec_t* v) {
+    if (v->size == 0)
+        return NULL;
     return v->data;
 }
 

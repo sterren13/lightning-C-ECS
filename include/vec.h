@@ -166,7 +166,7 @@ void* vec_get(vec_t* v, index_t index, typeSize_t elemSize);
 * @param elemSize: size of each element
 * @see: vec_set_t
 */
-void vec_set(vec_t* v, index_t index, void* data, typeSize_t elemSize);
+void vec_set(vec_t* v, index_t index, void* data, typeSize_t elemSize); // TODO change return type to int and return 1 if success 0 if failed
 
 /*
 * Set a element of a vector of given index.
