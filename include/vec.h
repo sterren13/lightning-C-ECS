@@ -1,8 +1,7 @@
-#include <stdlib.h>
 #ifdef __cplusplus
 extern "C" {
 #endif
-
+#include <stdlib.h>
 #define SIZE_CHECK
 typedef size_t index_t;
 typedef size_t typeSize_t;
@@ -101,9 +100,10 @@ void vec_append(vec_t* v, void* data, typeSize_t elemSize);
 * @param v: pointer to vector
 * @param index: index of element to be removed
 * @param elemSize: size of each element
+* @return: 1 if success, 0 if failed
 * @see: vec_remove_t
 */
-void vec_remove(vec_t* v, index_t index, typeSize_t elemSize);
+int vec_remove(vec_t* v, index_t index, typeSize_t elemSize);
 
 /*
 * Remove an element from a vector of given index.

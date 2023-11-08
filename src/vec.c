@@ -37,11 +37,12 @@ void vec_append(vec_t* v, void* data, typeSize_t elemSize) {
     v->size++;
 }
 
-void vec_remove(vec_t* v, index_t index, typeSize_t elemSize) {
+int vec_remove(vec_t* v, index_t index, typeSize_t elemSize) {
     if (index >= v->size)
-        return;
+        return 0;
     ecs_memcopy(v->data + (index * elemSize), v->data + ((v->size-1)*elemSize), elemSize);
     v->size--;
+    return 1;
 }
 
 void* vec_remove_back(vec_t* v, typeSize_t elemSize) {
