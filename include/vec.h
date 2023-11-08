@@ -131,7 +131,7 @@ void* vec_remove_back(vec_t* v, typeSize_t elemSize);
 * @see vec_remove_back
 */
 #define vec_remove_back_t(v, type) \
-    vec_remove_back(v, sizeof(type))
+    (type*)vec_remove_back(v, sizeof(type))
 
 /*
 * Get a element from a vector of given index.
@@ -156,6 +156,28 @@ void* vec_get(vec_t* v, index_t index, typeSize_t elemSize);
 */
 #define vec_get_t(v, index, type) \
     ((type*)vec_get(v, index, sizeof(type)))
+
+/*
+* Set a element of a vector of given index.
+* @note When SIZE_CHECK is defined, elemSize will be checked.
+* @param v: pointer to vector
+* @param index: index of element to be removed
+* @param data: pointer to data
+* @param elemSize: size of each element
+* @see: vec_set_t
+*/
+void vec_set(vec_t* v, index_t index, void* data, typeSize_t elemSize);
+
+/*
+* Set a element of a vector of given index.
+* @param v: pointer to vector
+* @param index: index of element to be removed
+* @param data: pointer to data
+* @param type: type of each element
+* @see vec_set
+*/
+#define vec_set_t(v, index, data, type) \
+    vec_set(v, index, data, sizeof(type))
 
 /*
 * Get the size of a vector.

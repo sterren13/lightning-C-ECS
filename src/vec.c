@@ -4,6 +4,9 @@
 int vec_init(vec_t* v, index_t preSize, typeSize_t elemSize) {
     v->capacity = preSize;
     v->size = 0;
+    #ifdef SIZE_CHECK
+        v->elemSize = elemSize;
+    #endif
     v->data = ecs_malloc(preSize * elemSize);
     if (v->data == NULL)
         return 0;
@@ -52,6 +55,13 @@ void* vec_get(vec_t* v, index_t index, typeSize_t elemSize) {
     if (index >= v->size)
         return NULL;
     return v->data + (index * elemSize);
+}
+
+void vec_set(vec_t* v, index_t index, void* data, typeSize_t elemSize) {
+    if (index >= v->size)
+        return;
+    ecs_memcopy(v->data + (index * elemSize), data, elemSize);
+
 }
 
 typeSize_t vec_size(vec_t* v) {
