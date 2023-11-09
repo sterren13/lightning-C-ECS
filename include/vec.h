@@ -1,3 +1,5 @@
+#ifndef ECS_VEC_H
+#define ECS_VEC_H
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -6,7 +8,7 @@ extern "C" {
 typedef size_t index_t;
 typedef size_t typeSize_t;
 
-typedef struct vec_t {
+typedef struct {
     void* data;
     index_t size;
     index_t capacity;
@@ -254,3 +256,4 @@ void* vec_back(vec_t* v, typeSize_t elemSize);
 #ifdef __cplusplus
 }
 #endif
+#endif //ECS_VEC_H

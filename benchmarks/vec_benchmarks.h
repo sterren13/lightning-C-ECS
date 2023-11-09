@@ -1,5 +1,4 @@
 #include <benchmark/benchmark.h>
-#include <chrono>
 #include "vec.h"
 #define IDERATE_SIZE 104856
 

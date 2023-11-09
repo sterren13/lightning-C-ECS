@@ -25,6 +25,7 @@ endif()
 # Add your source files here
 set(SOURCE_FILES 
     src/vec.c
+    src/staticHashmap.c
     )
 
 # Create the static library
