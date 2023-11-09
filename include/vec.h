@@ -214,7 +214,26 @@ void* vec_front(vec_t* v);
     ((type*)vec_front(v))
 
 /*
-* Get the last element of a vector.
+ * Get the last element of a vector.
+ * @param v: pointer to vector
+ * @param type: type of each element
+ * @return: pointer to last element
+ * @see: vec_end_t
+*/
+void* vec_end(vec_t* v, typeSize_t elemSize);
+
+/*
+ * Get the last element of a vector.
+ * @param v: pointer to vector
+ * @param type: type of each element
+ * @return: pointer to last element
+ * @see: vec_end
+*/
+#define vec_end_t(v, type) \
+    ((type*)vec_end(v, sizeof(type)))
+
+/*
+* Get the back ptr of a vector.
 * @param v: pointer to vector
 * @param elemSize: size of each element
 * @return: pointer to last element
@@ -223,7 +242,7 @@ void* vec_front(vec_t* v);
 void* vec_back(vec_t* v, typeSize_t elemSize);
 
 /*
-* Get the last element of a vector.
+* Get the back ptr of a vector.
 * @param v: pointer to vector
 * @param type: type of each element
 * @return: pointer to last element

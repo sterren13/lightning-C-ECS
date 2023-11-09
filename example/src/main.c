@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include "vec.h"
 #include <time.h>
-#include <stdio.h>
 #define IDERATE_SIZE 104856
 
 int main(int argc, char **argv) {
@@ -25,6 +24,9 @@ int main(int argc, char **argv) {
     }
     clock_gettime(CLOCK_MONOTONIC, &end);
     elapsed = end.tv_nsec - start.tv_nsec;
+    for (int i = 0; i < IDERATE_SIZE; i++) {
+        printf("i: %d = %d\n", i, *vec_get_t(&v, i, int));
+    }
     vec_free(&v);
     printf("vec time:\t %.9Lf ns\n", elapsed);
 

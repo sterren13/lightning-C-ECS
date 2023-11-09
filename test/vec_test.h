@@ -11,6 +11,7 @@
 *           - vec_get_t
 *           - vec_set_t
 *           - vec_front_t
+*           - vec_end_t
 *           - vec_back_t
 *           - vec_remove_back_t
 */
@@ -101,7 +102,7 @@ TEST_F(VectorTest, SetTest) {
     EXPECT_EQ(*vec_get_t(&v, 0, int), newValue) << "Set value is not correct";
 }
 
-TEST_F(VectorTest, FrontBackTest) {
+TEST_F(VectorTest, FrontEndBackTest) {
     EXPECT_EQ(vec_front_t(&v, int), nullptr) << "Front value is not null when size is 0";
     EXPECT_EQ(vec_back_t(&v, int), nullptr) << "Back value is not null when size is 0";
     int value1 = 5;
@@ -109,7 +110,8 @@ TEST_F(VectorTest, FrontBackTest) {
     vec_append_t(&v, &value1, int);
     vec_append_t(&v, &value2, int);
     EXPECT_EQ(*vec_front_t(&v, int), value1) << "Front value is not correct";
-    EXPECT_EQ(*vec_back_t(&v, int), value2) << "Back value is not correct";
+    EXPECT_EQ(*vec_end_t(&v, int), value2) << "end value is not correct";
+    EXPECT_EQ(vec_back_t(&v, int), vec_end_t(&v, int)+1) << "back is not one address after end";
 }
 
 TEST_F(VectorTest, RemoveBackTest) {

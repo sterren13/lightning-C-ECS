@@ -79,8 +79,14 @@ void* vec_front(vec_t* v) {
     return v->data;
 }
 
-void* vec_back(vec_t* v, typeSize_t elemSize) {
+void* vec_end(vec_t* v, typeSize_t elemSize) {
     if (v->size == 0)
         return NULL;
     return v->data + ((v->size-1) * elemSize);
+}
+
+void* vec_back(vec_t* v, typeSize_t elemSize) {
+    if (v->size == 0)
+        return NULL;
+    return v->data + ((v->size) * elemSize);
 }
