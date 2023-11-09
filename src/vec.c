@@ -1,5 +1,6 @@
 #include "vec.h"
 #include "until.h"
+#include <assert.h>
 
 int vec_init(vec_t* v, index_t preSize, typeSize_t elemSize) {
     v->capacity = preSize;
@@ -14,6 +15,9 @@ int vec_init(vec_t* v, index_t preSize, typeSize_t elemSize) {
 }
 
 void vec_resize(vec_t* v, index_t newCapacity, typeSize_t elemSize) {
+    #ifdef SIZE_CHECK
+        assert(v->elemSize != elemSize);
+    #endif
     v->capacity = newCapacity;
     v->data = ecs_realloc(v->data, newCapacity * elemSize);
 }
@@ -30,6 +34,9 @@ void vec_free(vec_t* v) {
 }
 
 void vec_append(vec_t* v, void* data, typeSize_t elemSize) {
+    #ifdef SIZE_CHECK
+        assert(v->elemSize != elemSize);
+    #endif
     if (v->size == v->capacity) {
         vec_resize(v, v->capacity * 2, elemSize);
     }
@@ -38,6 +45,9 @@ void vec_append(vec_t* v, void* data, typeSize_t elemSize) {
 }
 
 int vec_remove(vec_t* v, index_t index, typeSize_t elemSize) {
+    #ifdef SIZE_CHECK
+        assert(v->elemSize != elemSize);
+    #endif
     if (index >= v->size)
         return 0;
     ecs_memcopy(v->data + (index * elemSize), v->data + ((v->size-1)*elemSize), elemSize);
@@ -46,6 +56,9 @@ int vec_remove(vec_t* v, index_t index, typeSize_t elemSize) {
 }
 
 void* vec_remove_back(vec_t* v, typeSize_t elemSize) {
+    #ifdef SIZE_CHECK
+        assert(v->elemSize != elemSize);
+    #endif
     if (v->size == 0)
         return NULL;
     v->size--;
@@ -53,12 +66,18 @@ void* vec_remove_back(vec_t* v, typeSize_t elemSize) {
 }
 
 void* vec_get(vec_t* v, index_t index, typeSize_t elemSize) {
+    #ifdef SIZE_CHECK
+        assert(v->elemSize != elemSize);
+    #endif
     if (index >= v->size)
         return NULL;
     return v->data + (index * elemSize);
 }
 
 void vec_set(vec_t* v, index_t index, void* data, typeSize_t elemSize) {
+    #ifdef SIZE_CHECK
+        assert(v->elemSize != elemSize);
+    #endif
     if (index >= v->size)
         return;
     ecs_memcopy(v->data + (index * elemSize), data, elemSize);
@@ -80,12 +99,18 @@ void* vec_front(vec_t* v) {
 }
 
 void* vec_end(vec_t* v, typeSize_t elemSize) {
+    #ifdef SIZE_CHECK
+        assert(v->elemSize != elemSize);
+    #endif
     if (v->size == 0)
         return NULL;
     return v->data + ((v->size-1) * elemSize);
 }
 
 void* vec_back(vec_t* v, typeSize_t elemSize) {
+    #ifdef SIZE_CHECK
+        assert(v->elemSize != elemSize);
+    #endif
     if (v->size == 0)
         return NULL;
     return v->data + ((v->size) * elemSize);
