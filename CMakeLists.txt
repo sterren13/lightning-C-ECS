@@ -4,6 +4,7 @@ project(ECS)
 # Enable C++11
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
+set(CMAKE_C_STANDARD 23)
 
 # Add an option to enable testing
 option(BUILD_TESTS "Build tests" ON)

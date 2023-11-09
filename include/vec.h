@@ -152,6 +152,7 @@ void* vec_get(vec_t* v, index_t index, typeSize_t elemSize);
 * @param index: index of element to be removed
 * @param type: type of each element
 * @return: pointer to element
+* @note do not use in loop, it will bie slow. use vec_front_t and vec_back_t instead.
 * @see vec_get
 */
 #define vec_get_t(v, index, type) \

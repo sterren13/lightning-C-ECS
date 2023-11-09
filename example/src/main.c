@@ -7,32 +7,40 @@
 int main(int argc, char **argv) {
     struct timespec start, end;
     long double elapsed = 0;
+    // clock_gettime(CLOCK_MONOTONIC, &start);
+    // ....
+    //  clock_gettime(CLOCK_MONOTONIC, &end);
+    // elapsed = end.tv_nsec - start.tv_nsec;
 
     vec_t v;
     vec_init_t(&v, 1, int);
     for (int i = 0; i < IDERATE_SIZE; i++) {
         vec_append_t(&v, &i, int);
     }
-    // test vec_get_t
-    for (int i = 0; i < vec_size(&v); i++) {
-        clock_gettime(CLOCK_MONOTONIC, &start);
-        (*vec_get_t(&v, i, int))++;
-        clock_gettime(CLOCK_MONOTONIC, &end);
-        elapsed += (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec);
-    }
-    elapsed = elapsed/IDERATE_SIZE;
-    printf("vec_get_t time: %.9Lf ns\n", elapsed);
-
-    // test ptr
-    elapsed = 0;
-    int* end_ptr = vec_back_t(&v, int);
-    for (int* ptr = vec_front_t(&v, int); ptr != end_ptr; ptr++) {
-        clock_gettime(CLOCK_MONOTONIC, &start);
+    // start benchmark
+    clock_gettime(CLOCK_MONOTONIC, &start);
+    register int* endptr = vec_back_t(&v, int);
+    for (register int* ptr = vec_front_t(&v, int); ptr != endptr; ptr++) {
         (*ptr)++;
-        clock_gettime(CLOCK_MONOTONIC, &end);
-        elapsed += (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec);
     }
-    elapsed = elapsed/IDERATE_SIZE;
-    printf("ptr time: %.9Lf ns\n", elapsed);
+    clock_gettime(CLOCK_MONOTONIC, &end);
+    elapsed = end.tv_nsec - start.tv_nsec;
+    vec_free(&v);
+    printf("vec time:\t %.9Lf ns\n", elapsed);
+
+    int* array = (int*)malloc(IDERATE_SIZE * sizeof(int));
+    for (int i = 0; i < IDERATE_SIZE; i++) {
+        array[i] = i;
+    }
+    // start benchmark
+    clock_gettime(CLOCK_MONOTONIC, &start);
+    register int* end_ptr = array + IDERATE_SIZE;
+    for (register int *ptr = array; ptr != end_ptr; ptr++) {
+        (*ptr)++;
+    }
+    clock_gettime(CLOCK_MONOTONIC, &end);
+    elapsed = end.tv_nsec - start.tv_nsec;
+    free(array);
+    printf("array time:\t %.9Lf ns\n", elapsed);
     return 0;
 }
