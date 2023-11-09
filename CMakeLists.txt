@@ -7,8 +7,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # Add an option to enable testing
 option(BUILD_TESTS "Build tests" ON)
-option(BUILD_EXAMPLES "Build examples" OFF)
-option(BUILD_BENSCHMARKS "Build benchmarks" ON)
+option(BUILD_EXAMPLE "Build example" ON)
+option(BUILD_BENCHMARKS "Build benchmarks" ON)
 
 # Find Google Test if testing is enabled
 if(BUILD_TESTS)
@@ -40,18 +40,19 @@ if(BUILD_TESTS)
     target_include_directories(runUnitTests PRIVATE ${GTEST_INCLUDE_DIRS})
 endif()
 
-#if (BUILD_EXAMPLES)
-#    set(SOURCE_FILES_EXAMPLES
-#        example/src/vec.c
-#        )
-#    add_executable(example ${SOURCE_FILES_EXAMPLES})
-#    target_link_libraries(example ECS)
-#endif()
+if (BUILD_EXAMPLE)
+    set(SOURCE_FILES_EXAMPLES
+        example/src/main.c
+        )
+    add_executable(example ${SOURCE_FILES_EXAMPLES})
+    target_link_libraries(example ECS)
+    target_include_directories(example PRIVATE example/include)
+endif()
 
-if (BUILD_BENSCHMARKS)
+if (BUILD_BENCHMARKS)
     set(BENCHMARK_FILES
-        benschmarks/benchmarks.cpp
-        benschmarks/vec_benschmarks.h
+        benchmarks/benchmarks.cpp
+        benchmarks/vec_benchmarks.h
         )
     add_executable(runBenchmarks ${BENCHMARK_FILES})
     target_link_libraries(runBenchmarks ECS benchmark)
