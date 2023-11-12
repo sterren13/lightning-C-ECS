@@ -1,34 +1,36 @@
 #include <stdio.h>
+#include "staticHashmap.h"
+#include "hashFunctions.h"
+#include "component.h"
 #include "vec.h"
-#include <time.h>
-#define IDERATE_SIZE 104856
+#include <string.h>
 
-typedef unsigned long StaticMapKey_t;
-typedef struct {
-    StaticMapKey_t key;
-} StaticMapEntry;
-
-// Hashfunctie (djb2)
-unsigned long hashFunction(const char *str) {
-    unsigned long hash = 5381;
-    int c;
-
-    while ((c = *str++)) {
-        hash = ((hash << 5) + hash) + c;
-    }
-
-    return hash;
+uint64_t hashString(char* string) {
+    int len = (int)strlen(string);
+    return MurmurHash64( string, len, 0);
 }
 
 int main(int argc, char **argv) {
-    unsigned long intId = hashFunction("int");
-    unsigned long floatId = hashFunction("float");
-    unsigned long charId = hashFunction("char");
-    unsigned long doubleId = hashFunction("double");
 
-    printf("Unique ID for int: %lu\n", intId);
-    printf("Unique ID for float: %lu\n", floatId);
-    printf("Unique ID for char: %lu\n", charId);
-    printf("Unique ID for double: %lu\n", doubleId);
+    StaticHashmap_entry_t entries[] = {
+            {hashString("position"), "test position"},
+            {hashString("velocity"), "test velocity"},
+            {hashString("acceleration"), "test acceleration"},
+            {hashString("test"), "test test"},
+            {hashString("test2"), "test test2"},
+            {hashString("test3"), "test test3"},
+            {hashString("test4"), "test test4"}
+    };
+    StaticHashmap_t map = StaticHashmap_init(entries, sizeof(entries) / sizeof(StaticHashmap_entry_t));
+
+    printf("\n");
+    printf("%s\n", (char*)StaticHashmap_get(&map, hashString("position")));
+    printf("%s\n", (char*)StaticHashmap_get(&map, hashString("velocity")));
+    printf("%s\n", (char*)StaticHashmap_get(&map, hashString("acceleration")));
+    printf("%s\n", (char*)StaticHashmap_get(&map, hashString("test")));
+    printf("%s\n", (char*)StaticHashmap_get(&map, hashString("test2")));
+    printf("%s\n", (char*)StaticHashmap_get(&map, hashString("test3")));
+    printf("%s\n", (char*)StaticHashmap_get(&map, hashString("test4")));
+
     return 0;
 }
