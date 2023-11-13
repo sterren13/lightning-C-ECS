@@ -63,8 +63,8 @@ BENCHMARK(BM_xxhash_hash);
 
 static void BM_City_hash(benchmark::State& state) {
     const char *s = HASH_STRING;
-    unsigned long hashwaarde;
-    size_t len = strlen(s);
+    uint64_t hashwaarde;
+    size_t len = (int)strlen(s);
     for (auto _ : state) {
         hashwaarde = CityHash64(s, len);
     }

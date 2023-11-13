@@ -10,8 +10,8 @@
 uint64_t hashString(char* string) {
     int len = (int)strlen(string);
     //return MurmurHash64( string, len, 0);
-    //return XXH64(string, len, 0);
-    return CityHash64(string, len);
+    return XXH64(string, len, 0);
+    //return CityHash64(string, len);
 }
 
 int main(int argc, char **argv) {
@@ -28,11 +28,11 @@ int main(int argc, char **argv) {
             {hashString("test6"), "test test6"},
             {hashString("test7"), "test test7"},
             {hashString("test8"), "test test8"},
-            {hashString("test9"), "test test9"},
+            {hashString("test9"), "test test9"}
     };
-    StaticHashmap_t map = StaticHashmap_init(entries, sizeof(entries) / sizeof(StaticHashmap_entry_t));
+    StaticHashmap_t map;
+    StaticHashmap_init(entries, sizeof(entries) / sizeof(StaticHashmap_entry_t), &map);
 
-    printf("\n");
     printf("%s\n", (char*)StaticHashmap_get(&map, hashString("position")));
     printf("%s\n", (char*)StaticHashmap_get(&map, hashString("velocity")));
     printf("%s\n", (char*)StaticHashmap_get(&map, hashString("acceleration")));
@@ -40,6 +40,13 @@ int main(int argc, char **argv) {
     printf("%s\n", (char*)StaticHashmap_get(&map, hashString("test2")));
     printf("%s\n", (char*)StaticHashmap_get(&map, hashString("test3")));
     printf("%s\n", (char*)StaticHashmap_get(&map, hashString("test4")));
+    printf("%s\n", (char*)StaticHashmap_get(&map, hashString("test5")));
+    printf("%s\n", (char*)StaticHashmap_get(&map, hashString("test6")));
+    printf("%s\n", (char*)StaticHashmap_get(&map, hashString("test7")));
+    printf("%s\n", (char*)StaticHashmap_get(&map, hashString("test8")));
+    printf("%s\n", (char*)StaticHashmap_get(&map, hashString("test9")));
+
+    StaticHashmap_free(&map);
 
     return 0;
 }

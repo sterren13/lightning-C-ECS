@@ -23,16 +23,18 @@ endif()
 
 
 # Add your source files here
+set(SOURCE_FILES_HASH
+        src/Hash/hashFunctions.c
+        src/Hash/xxhash.c
+        src/Hash/City.c
+)
 set(SOURCE_FILES 
     src/vec.c
-    src/Hash/hashFunctions.c
-    src/Hash/xxhash.c
-    src/Hash/City.c
     src/staticHashmap.c
     )
 
 # Create the static library
-add_library(ECS STATIC ${SOURCE_FILES})
+add_library(ECS STATIC ${SOURCE_FILES} ${SOURCE_FILES_HASH})
 target_include_directories(ECS PUBLIC include)
 
 # Create the test executable if testing is enabled
@@ -60,5 +62,5 @@ if (BUILD_BENCHMARKS)
         benchmarks/vec_benchmarks.h
         )
     add_executable(runBenchmarks ${BENCHMARK_FILES})
-    target_link_libraries(runBenchmarks ECS benchmark)
+    target_link_libraries(runBenchmarks benchmark ECS)
 endif()

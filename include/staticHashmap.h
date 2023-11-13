@@ -12,15 +12,17 @@ typedef struct {
     void* value;
 } StaticHashmap_entry_t;
 
-typedef struct {
+typedef struct StaticHashmap_t {
     uint32_t size;
-    StaticHashmap_entry_t* entries;
+    vec_t* bukkets; // vec of bukket_t
 } StaticHashmap_t;
 
-StaticHashmap_t StaticHashmap_init(StaticHashmap_entry_t* entries, uint32_t size);
+void StaticHashmap_init(StaticHashmap_entry_t* entries, uint32_t size, StaticHashmap_t* map);
 
 void* StaticHashmap_get(StaticHashmap_t* map, uint64_t key);
 
 void StaticHashmap_free(StaticHashmap_t* map);
+
+int StaticHashmap_has(StaticHashmap_t* map, uint64_t key);
 
 #endif //ECS_STATICHASHMAP_H
