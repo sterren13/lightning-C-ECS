@@ -63,4 +63,7 @@ void StaticHashmap_free(StaticHashmap_t* map) {
         vec_front(ptr);
     }
     free(map->bukkets);
+    map->bukkets = nullptr;
+    map->capacity = 0;
+    map->size = 0;
 }
