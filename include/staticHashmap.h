@@ -14,6 +14,7 @@ typedef struct {
 
 typedef struct StaticHashmap_t {
     uint32_t size;
+    uint32_t capacity;
     vec_t* bukkets; // vec of bukket_t
 } StaticHashmap_t;
 

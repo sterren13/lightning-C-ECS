@@ -5,7 +5,7 @@
 #define EXPAND_FACTOR 2
 
 uint64_t get_index(StaticHashmap_t* map, uint64_t key) {
-    return key % (map->size);
+    return key % (map->capacity);
 }
 
 int find_in_bukket(vec_t* bukket, uint64_t key) {
@@ -25,10 +25,17 @@ int StaticHashmap_has(StaticHashmap_t* map, uint64_t key) {
 }
 
 void StaticHashmap_init(StaticHashmap_entry_t* entries, uint32_t size, StaticHashmap_t* map) {
-    map->size = (uint32_t)(size * EXPAND_FACTOR);
-    map->bukkets = malloc(sizeof(vec_t) * map->size);
+    if (size == 0 || entries == nullptr) {
+        map->capacity = 0;
+        map->size = 0;
+        map->bukkets = nullptr;
+        return;
+    }
+    map->capacity = (uint32_t)(size * EXPAND_FACTOR);
+    map->size = size;
+    map->bukkets = malloc(sizeof(vec_t) * map->capacity);
     // init all bukkets
-    for (vec_t* ptr = map->bukkets; ptr < (map->bukkets + map->size); ptr++)
+    for (vec_t* ptr = map->bukkets; ptr < (map->bukkets + map->capacity); ptr++)
         vec_init_t(ptr, 2, StaticHashmap_entry_t);
     // insert all entries
     StaticHashmap_entry_t* ptr_input;
@@ -52,7 +59,7 @@ void* StaticHashmap_get(StaticHashmap_t* map, uint64_t key) {
 }
 
 void StaticHashmap_free(StaticHashmap_t* map) {
-    for (vec_t * ptr = map->bukkets; ptr < (map->bukkets + map->size); ptr++) {
+    for (vec_t * ptr = map->bukkets; ptr < (map->bukkets + map->capacity); ptr++) {
         vec_front(ptr);
     }
     free(map->bukkets);
