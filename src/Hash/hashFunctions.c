@@ -1,4 +1,4 @@
-#include "hashFunctions.h"
+#include "Hash/hashFunctions.h"
 
 uint64_t jenkins_one_at_a_time_hash(const char *key) {
     uint64_t hash = 0;

@@ -1,13 +1,17 @@
 #include <stdio.h>
 #include "staticHashmap.h"
-#include "hashFunctions.h"
+#include "Hash/hashFunctions.h"
+#include "Hash/xxhash.h"
+#include "Hash/City.h"
 #include "component.h"
 #include "vec.h"
 #include <string.h>
 
 uint64_t hashString(char* string) {
     int len = (int)strlen(string);
-    return MurmurHash64( string, len, 0);
+    //return MurmurHash64( string, len, 0);
+    //return XXH64(string, len, 0);
+    return CityHash64(string, len);
 }
 
 int main(int argc, char **argv) {
@@ -19,7 +23,12 @@ int main(int argc, char **argv) {
             {hashString("test"), "test test"},
             {hashString("test2"), "test test2"},
             {hashString("test3"), "test test3"},
-            {hashString("test4"), "test test4"}
+            {hashString("test4"), "test test4"},
+            {hashString("test5"), "test test5"},
+            {hashString("test6"), "test test6"},
+            {hashString("test7"), "test test7"},
+            {hashString("test8"), "test test8"},
+            {hashString("test9"), "test test9"},
     };
     StaticHashmap_t map = StaticHashmap_init(entries, sizeof(entries) / sizeof(StaticHashmap_entry_t));
 

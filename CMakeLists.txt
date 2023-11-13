@@ -25,7 +25,9 @@ endif()
 # Add your source files here
 set(SOURCE_FILES 
     src/vec.c
-    src/hashFunctions.c
+    src/Hash/hashFunctions.c
+    src/Hash/xxhash.c
+    src/Hash/City.c
     src/staticHashmap.c
     )
 

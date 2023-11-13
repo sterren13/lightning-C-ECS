@@ -1,7 +1,7 @@
 #include "staticHashmap.h"
 #include <stdio.h>
 
-#define EXPAND_FACTOR 4
+#define EXPAND_FACTOR 2
 
 uint64_t get_index(StaticHashmap_t* map, uint64_t key) {
     return key % (map->size);
