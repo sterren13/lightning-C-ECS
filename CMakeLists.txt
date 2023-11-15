@@ -6,6 +6,12 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(CMAKE_C_STANDARD 23)
 
+# Voeg -O3 toe aan CXX_FLAGS (voor C++)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -march=native -funroll-loops -flto")
+
+# Voeg -O3 toe aan C_FLAGS (voor C)
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3 -march=native -funroll-loops -flto")
+
 # Add an option to enable testing
 option(BUILD_TESTS "Build tests" ON)
 option(BUILD_EXAMPLE "Build example" ON)

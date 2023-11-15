@@ -9,7 +9,7 @@ typedef size_t index_t;
 typedef size_t typeSize_t;
 
 typedef struct {
-    void* data;
+    char* data;
     index_t size;
     index_t capacity;
 #ifdef SIZE_CHECK

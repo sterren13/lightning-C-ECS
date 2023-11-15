@@ -8,7 +8,8 @@ int vec_init(vec_t* v, index_t preSize, typeSize_t elemSize) {
     #ifdef SIZE_CHECK
         v->elemSize = elemSize;
     #endif
-    v->data = ecs_malloc(preSize * elemSize);
+    int a = posix_memalign((void**)&v->data, 64,preSize * elemSize);
+    assert(a == 0);
     if (v->data == NULL)
         return 0;
     return 1;
@@ -19,7 +20,12 @@ void vec_resize(vec_t* v, index_t newCapacity, typeSize_t elemSize) {
         assert(v->elemSize == elemSize);
     #endif
     v->capacity = newCapacity;
-    v->data = ecs_realloc(v->data, newCapacity * elemSize);
+    void* newPtr = nullptr;
+    int a = posix_memalign(&newPtr, 64,newCapacity * elemSize);
+    assert(a == 0);
+    memcpy(newPtr, (void*)v->data, v->size * elemSize);
+    free(v->data);
+    v->data = newPtr;
 }
 
 void vec_clear(vec_t* v) {

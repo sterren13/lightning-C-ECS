@@ -34,9 +34,9 @@ static void BM_VecIderate(benchmark::State& state) {
         vec_append_t(&v, &i, int);
     }
     // start benchmark
+    const int* end = vec_back_t(&v, int);
     for (auto _ : state) {
-        register int* end = vec_back_t(&v, int);
-        for (register int* ptr = vec_front_t(&v, int); ptr != end; ptr++) {
+        for (int* ptr = vec_front_t(&v, int); ptr != end; ptr++) {
             (*ptr)++;
         }
     }
@@ -50,12 +50,27 @@ static void BM_IderateArray(benchmark::State& state) {
         array[i] = i;
     }
     // start benchmark
+    const int* end_ptr = array + IDERATE_SIZE;
     for (auto _ : state) {
-        register int* end_ptr = array + IDERATE_SIZE;
-        for (register int *ptr = array; ptr != end_ptr; ptr++) {
+        for (int *ptr = array; ptr != end_ptr; ptr++) {
             (*ptr)++;
         }
     }
     free(array);
 }
 BENCHMARK(BM_IderateArray);
+
+static void BM_IderateStacArray(benchmark::State& state) {
+    int array[IDERATE_SIZE];
+    for (int i = 0; i < IDERATE_SIZE; i++) {
+        array[i] = i;
+    }
+    // start benchmark
+    const int* end_ptr = array + IDERATE_SIZE;
+    for (auto _ : state) {
+        for (int *ptr = array; ptr != end_ptr; ptr++) {
+            (*ptr)++;
+        }
+    }
+}
+BENCHMARK(BM_IderateStacArray);

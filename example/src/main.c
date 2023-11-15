@@ -6,47 +6,26 @@
 #include "component.h"
 #include "vec.h"
 #include <string.h>
+#define IDERATE_SIZE 104856
 
-uint64_t hashString(char* string) {
-    int len = (int)strlen(string);
-    //return MurmurHash64( string, len, 0);
-    return XXH64(string, len, 0);
-    //return CityHash64(string, len);
+void iderateVec(vec_t* v) {
+    const int* end = vec_back_t(v, int);
+    for (int* ptr = vec_front_t(v, int); ptr != end; ptr++) {
+        (*ptr)++;
+    }
 }
 
 int main(int argc, char **argv) {
+    vec_t v;
+    vec_init_t(&v, 1, int);
+    for (int i = 0; i < IDERATE_SIZE; i++) {
+        vec_append_t(&v, &i, int);
+    }
+    printf("Cache aligned: %s\n", (((unsigned long)v.data) % 64) == 0 ? "true" : "false");
 
-    StaticHashmap_entry_t entries[] = {
-            {hashString("position"), "test position"},
-            {hashString("velocity"), "test velocity"},
-            {hashString("acceleration"), "test acceleration"},
-            {hashString("test"), "test test"},
-            {hashString("test2"), "test test2"},
-            {hashString("test3"), "test test3"},
-            {hashString("test4"), "test test4"},
-            {hashString("test5"), "test test5"},
-            {hashString("test6"), "test test6"},
-            {hashString("test7"), "test test7"},
-            {hashString("test8"), "test test8"},
-            {hashString("test9"), "test test9"}
-    };
-    StaticHashmap_t map;
-    StaticHashmap_init(entries, sizeof(entries) / sizeof(StaticHashmap_entry_t), &map);
+    iderateVec(&v);
 
-    printf("%s\n", (char*)StaticHashmap_get(&map, hashString("position")));
-    printf("%s\n", (char*)StaticHashmap_get(&map, hashString("velocity")));
-    printf("%s\n", (char*)StaticHashmap_get(&map, hashString("acceleration")));
-    printf("%s\n", (char*)StaticHashmap_get(&map, hashString("test")));
-    printf("%s\n", (char*)StaticHashmap_get(&map, hashString("test2")));
-    printf("%s\n", (char*)StaticHashmap_get(&map, hashString("test3")));
-    printf("%s\n", (char*)StaticHashmap_get(&map, hashString("test4")));
-    printf("%s\n", (char*)StaticHashmap_get(&map, hashString("test5")));
-    printf("%s\n", (char*)StaticHashmap_get(&map, hashString("test6")));
-    printf("%s\n", (char*)StaticHashmap_get(&map, hashString("test7")));
-    printf("%s\n", (char*)StaticHashmap_get(&map, hashString("test8")));
-    printf("%s\n", (char*)StaticHashmap_get(&map, hashString("test9")));
-
-    StaticHashmap_free(&map);
-
+    printf("%d\n", *vec_get_t(&v, 0, int));
+    vec_free(&v);
     return 0;
 }
