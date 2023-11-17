@@ -37,6 +37,7 @@ set(SOURCE_FILES_HASH
 set(SOURCE_FILES_STORAGE
         src/storage/vec.c
         src/storage/staticHashmap.c
+        src/storage/linkedList.c
 )
 set(SOURCE_FILES_ECS
         src/ECS/register.c
