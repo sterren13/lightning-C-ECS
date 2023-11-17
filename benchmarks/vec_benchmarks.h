@@ -1,5 +1,5 @@
 #include <benchmark/benchmark.h>
-#include "vec.h"
+#include "storage/vec.h"
 #define IDERATE_SIZE 104856
 
 static void BM_VecAppend(benchmark::State& state) {

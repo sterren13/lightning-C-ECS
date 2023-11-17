@@ -1,4 +1,4 @@
-#include "vec.h"
+#include "storage/vec.h"
 
 /* function to test:
 *           - test vec_init

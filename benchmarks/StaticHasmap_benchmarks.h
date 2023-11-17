@@ -6,7 +6,7 @@
 #define ECS_STATICHASMAP_BENCHMARKS_H
 
 #include "benchmark/benchmark.h"
-#include "staticHashmap.h"
+#include "storage/staticHashmap.h"
 
 static void BM_StaticHashmapInit(benchmark::State& state) {
     StaticHashmap_entry_t entries[] = {

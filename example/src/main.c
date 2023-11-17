@@ -1,10 +1,10 @@
 #include <stdio.h>
-#include "staticHashmap.h"
+#include "storage/staticHashmap.h"
 #include "Hash/hashFunctions.h"
 #include "Hash/xxhash.h"
 #include "Hash/City.h"
 #include "component.h"
-#include "vec.h"
+#include "storage/vec.h"
 #include <string.h>
 #define IDERATE_SIZE 104856
 

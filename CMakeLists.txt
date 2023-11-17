@@ -34,13 +34,17 @@ set(SOURCE_FILES_HASH
         src/Hash/xxhash.c
         src/Hash/City.c
 )
-set(SOURCE_FILES 
-    src/vec.c
-    src/staticHashmap.c
+set(SOURCE_FILES_STORAGE
+        src/storage/vec.c
+        src/storage/staticHashmap.c
+)
+set(SOURCE_FILES_ECS
+        src/ECS/register.c
+        src/ECS/table.c
     )
 
 # Create the static library
-add_library(ECS STATIC ${SOURCE_FILES} ${SOURCE_FILES_HASH})
+add_library(ECS STATIC ${SOURCE_FILES} ${SOURCE_FILES_STORAGE} ${SOURCE_FILES_HASH} ${SOURCE_FILES_ECS})
 target_include_directories(ECS PUBLIC include)
 
 # Create the test executable if testing is enabled

@@ -5,7 +5,7 @@
 #ifndef ECS_STATICHASHMAP_TEST_H
 #define ECS_STATICHASHMAP_TEST_H
 #include "gtest/gtest.h"
-#include "staticHashmap.h"
+#include "storage/staticHashmap.h"
 
 class StaticHashmapTest : public ::testing::Test {
 protected:

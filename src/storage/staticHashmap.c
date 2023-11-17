@@ -1,4 +1,4 @@
-#include "staticHashmap.h"
+#include "storage/staticHashmap.h"
 #include <stdio.h>
 #include <assert.h>
 
